@@ -3,8 +3,8 @@ var app = new Vue({
     data: {
         clubs: [],
         clubSelected: '',
-        startDate: '01/01/2018',
-        endDate: '10/10/2019',
+        startDate: '',
+        endDate: '',
         isLoading: false,
         data: null,
     },
