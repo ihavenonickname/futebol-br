@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
+
+<title>Brasileirão</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+<link rel="stylesheet" href="index.css">
+
+<script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script defer src="index.js"></script>
+
+<h1 class="title has-text-centered ml-3 mr-3">
+    Estatísticas dos times no Brasileirão
+</h1>
+
+<p class="subtitle has-text-centered ml-3 mr-3">
+    Escolha um time e selecione uma data entre 2012 e 2019
+</p>
+
+<p id="dumb-loading" class="has-text-centered fa-3x">
+    <i class="fas fa-spinner fa-spin"></i>
+</p>
+
+<div id="app" class="columns is-desktop is-hidden">
+    <div class="column is-4 is-offset-4">
+        <div class="field is-horizontal ml-3 mr-3">
+            <div class="field-label is-normal">
+                <label class="label">Data inicial</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div :class="controlInputClass">
+                        <input v-model="startDate" :disabled="isLoading" class="input" type="text"
+                            placeholder="dd/mm/aaaa">
+                        <span class="icon is-medium is-left">
+                            <i class="fas fa-calendar-day"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-horizontal ml-3 mr-3">
+            <div class="field-label is-normal">
+                <label class="label">Data final</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div :class="controlInputClass">
+                        <input v-model="endDate" :disabled="isLoading" class="input" type="text"
+                            placeholder="dd/mm/aaaa">
+                        <span class="icon is-medium is-left">
+                            <i class="fas fa-calendar-day"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-horizontal ml-3 mr-3">
+            <div class="field-label is-normal">
+                <label class="label">Clube</label>
+            </div>
+            <div class="field-body">
+                <div :class="controlInputClass">
+                    <span class="select is-fullwidth">
+                        <select class="is-fullwidth" v-model="clubSelected" :disabled="isLoading">
+                            <option disabled value="">Selecione</option>
+                            <option v-for="name in clubs">{{ name }}</option>
+                        </select>
+                    </span>
+                    <span class="icon is-left">
+                        <i class="fas fa-futbol"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons is-centered">
+            <button @click="search" :disabled="!canSearch" :class="buttonSearchClass">
+                <span class="icon">
+                    <i class="fas fa-search"></i>
+                </span>
+                <span>Pesquisar</span>
+            </button>
+        </div>
+
+        <p v-if="report" v-for="p in report" class="has-text-justified ml-4 mr-4 indented">
+            {{ p }}
+        </p>
+    </div>
+</div>
