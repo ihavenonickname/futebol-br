@@ -65,7 +65,7 @@
                 <label class="label">Clube</label>
             </div>
             <div class="field-body">
-                <div :class="{ ...controlInputClass, 'forced-full-width': true }">
+                <div :class="[ ...controlInputClass, 'forced-full-width' ]">
                     <span class="select is-fullwidth">
                         <select class="is-fullwidth" v-model="clubSelected" :disabled="isLoading">
                             <option disabled value="">Selecione</option>

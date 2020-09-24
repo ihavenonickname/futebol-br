@@ -34,10 +34,10 @@ var app = new Vue({
             );
         },
         buttonSearchClass() {
-            return { 'button': true, 'is-primary': true, 'is-loading': this.isLoading };
+            return [ 'button', 'is-primary', this.isLoading ? 'is-loading' : '' ];
         },
         controlInputClass() {
-            return { 'control': true, 'has-icons-left': true, 'is-fullwidth': true, 'is-loading': this.isLoading };
+            return [ 'control', 'has-icons-left', 'is-fullwidth', 'is-loading' ? this.isLoading : '' ];
         },
     },
     methods: {
