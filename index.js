@@ -64,19 +64,15 @@ var app = new Vue({
                 })
         },
         startApp() {
-            document.getElementById('dumb-loading').classList.add('is-hidden');
-            document.getElementById('app').classList.remove('is-hidden');
-
-            this.isLoading = true;
-
             fetch('https://f4vvxlct29.execute-api.us-east-1.amazonaws.com/dev/nomes')
                 .then(res => res.json())
                 .then(clubs => {
-                    this.isLoading = false;
+                    document.getElementById('dumb-loading').classList.add('is-hidden');
+                    document.getElementById('app').classList.remove('is-hidden');
                     this.clubs = clubs;
                 }).catch(err => {
-                    this.isLoading = false;
                     alert(err);
+                    alert('Recarregue a página')
                 });
         }
     },
