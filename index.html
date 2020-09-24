@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 <script defer src="index.js"></script>
 
-<h1 class="title has-text-centered ml-3 mr-3">
+<h1 class="title has-text-centered ml-3 mr-3 mt-5">
     Estatísticas dos times no Brasileirão
 </h1>
 
@@ -26,7 +26,7 @@
 
 <div id="app" class="columns is-desktop is-hidden">
     <div class="column is-4 is-offset-4">
-        <div class="field is-horizontal ml-3 mr-3">
+        <div class="field is-horizontal ml-3 mr-3 mt-1">
             <div class="field-label is-normal">
                 <label class="label">Data inicial</label>
             </div>
@@ -65,7 +65,7 @@
                 <label class="label">Clube</label>
             </div>
             <div class="field-body">
-                <div :class="controlInputClass">
+                <div :class="{ ...controlInputClass, 'forced-full-width': true }">
                     <span class="select is-fullwidth">
                         <select class="is-fullwidth" v-model="clubSelected" :disabled="isLoading">
                             <option disabled value="">Selecione</option>
