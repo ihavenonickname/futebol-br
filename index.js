@@ -14,18 +14,20 @@ var app = new Vue({
                 return null;
             }
 
+            const startDate = this.startDate.split('-').reverse().join('/');
+            const endDate = this.endDate.split('-').reverse().join('/');
             const d = this.data;
             const name = this.clubSelected.substring(0, this.clubSelected.length - 5);
 
             return [
-                `No período de ${this.startDate} a ${this.endDate}, o ${name} jogou ${d['matches']} partidas, disputando ${d['matches'] * 3} pontos e conquistando ${d['points']}, o que resulta num rendimento de ${(d['points'] / (d['matches'] * 3) * 100).toFixed(0)}%`,
+                `No período de ${startDate} a ${endDate}, o ${name} jogou ${d['matches']} partidas, disputando ${d['matches'] * 3} pontos e conquistando ${d['points']}, o que resulta num rendimento de ${(d['points'] / (d['matches'] * 3) * 100).toFixed(0)}%`,
                 `Desses jogos, ${d['matches-home']} foram disputados em casa, nos quais obteve ${d['points-home']} pontos, ou seja, um aproveitamento de ${(d['points-home'] / (d['matches-home'] * 3) * 100).toFixed(0)}% em casa. Fora de casa foram ${d['matches-away']} partidas e ${d['points-away']} pontos, ou ${(d['points-away'] / (d['matches-away'] * 3) * 100).toFixed(0)}% de aproveitamento longe do seu estádio.`,
                 `Os ${d['points']} pontos conquistados vieram em ${d['victories']} vitórias e ${d['ties']} empates. Considerando apenas os jogos em que pontuou, ${(d['ties'] / (d['ties'] + d['victories']) * 100).toFixed(0)}% foram empate. Isso representa ${(d['ties'] / (d['points']) * 100).toFixed(0)}% dos pontos totais conquistados.`,
                 `Das ${d['victories']} vitórias, ${(d['victory-1-goal'] / d['victories'] * 100).toFixed(0)}% aconteceram com um único gol de diferença, enquanto ${(d['victory-2-goals'] / d['victories'] * 100).toFixed(0)}% vieram com dois gols de diferença e ${(d['victory-many-goals'] / d['victories'] * 100).toFixed(0)}% foram de goleada.`,
             ]
         },
         canSearch() {
-            const pattern = /^\d\d\/\d\d\/\d{4}$/;
+            const pattern = /^\d{4}-\d\d-\d\d$/;
 
             return (
                 this.clubSelected !== '' &&
@@ -45,11 +47,7 @@ var app = new Vue({
             this.isLoading = true;
             this.data = null;
 
-            const startDate = this.startDate.split('/').reverse().join('-');
-            const endDate = this.endDate.split('/').reverse().join('-');
-            const name = this.clubSelected;
-
-            fetch(`https://f4vvxlct29.execute-api.us-east-1.amazonaws.com/dev/relatorio?start-date=${startDate}&end-date=${endDate}&team=${name}`)
+            fetch(`https://f4vvxlct29.execute-api.us-east-1.amazonaws.com/dev/relatorio?start-date=${this.startDate}&end-date=${this.endDate}&team=${this.clubSelected}`)
                 .then(res => res.json())
                 .then(data => {
                     this.isLoading = false;
@@ -78,13 +76,20 @@ var app = new Vue({
     },
     watch: {
         startDate() {
-            this.data = null;
+            if (this.data) {
+                this.data = null;
+            }
+
         },
         endDate() {
-            this.data = null;
+            if (this.data) {
+                this.data = null;
+            }
         },
         clubSelected() {
-            this.data = null;
+            if (this.data) {
+                this.data = null;
+            }
         }
     },
     created() {
